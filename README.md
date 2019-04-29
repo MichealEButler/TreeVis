@@ -1,2 +1,2 @@
 # TreeVis
-Blender Script to visual TreeABM output in 3D
+Collection of Blender Script's for visualising ABM output in 3D.
