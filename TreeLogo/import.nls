@@ -1,0 +1,163 @@
+extensions [gis]
+
+globals [ elevation ]
+
+patches-own [elev]
+
+to load-gis
+  set elevation gis:load-dataset "nz7200_DTM_1M.asc"
+  gis:set-world-envelope-ds gis:envelope-of elevation
+
+  gis:apply-raster  elevation elev
+  ask patches [
+      set pcolor scale-color grey elev 340 410
+    ;if pcolor < 3 [ set pcolor blue ]
+  ]
+  
+
+end
+
+to import-tmax
+  if Dataset = "Whitby" [
+    file-open "Input/Whitby/tmax.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Whitby/tmax.csv"]
+  ]
+  if Dataset = "Durham" [
+    file-open "Input/Durham/tmax.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Durham/tmax.csv"]
+  ]
+  if Dataset = "Bradford" [
+    file-open "Input/Bradford/tmax.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Bradford/tmax.csv"]
+  ]
+  if Dataset = "Eskdalemuir" [
+    file-open "Input/Eskdalemuir/tmax.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Eskdalemuir/tmax.csv"]
+  ]
+   if Dataset = "Oxford" [
+    file-open "Input/Oxford/tmax.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Oxford/tmax.csv"]
+  ]
+   repeat 1 [
+    set tmax file-read
+    set TJan_max tmax 
+    ;print tmax
+    ;print TJan
+  ]
+
+   repeat 6 [
+    set tmax file-read
+    ;print tmax
+  ]
+
+  set TJul_max tmax
+  ;print TJul
+
+  repeat 5 [
+    set tmax file-read
+  ]
+
+end
+
+to import-tmin
+
+   if Dataset = "Whitby" [
+    file-open "Input/Whitby/tmin.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Whitby/tmin.csv"]
+  ]
+  if Dataset = "Durham" [
+    file-open "Input/Durham/tmin.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Durham/tmin.csv"]
+  ]
+  if Dataset = "Bradford" [
+    file-open "Input/Bradford/tmin.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Bradford/tmin.csv"]
+  ]
+    if Dataset = "Eskdalemuir" [
+    file-open "Input/Eskdalemuir/tmin.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Eskdalemuir/tmin.csv"]
+   
+  ]
+  if Dataset = "Oxford" [
+    file-open "Input/Oxford/tmin.csv"
+    if file-at-end? [
+      file-close
+      file-open "Input/Oxford/tmin.csv"]
+  ]
+  repeat 1 [
+    set tmin file-read
+    set TJan_min tmin   ;;; huge bug here where the min was being set to the max 
+  ]
+
+   repeat 6 [
+    set tmin file-read
+  ]
+
+  set TJul_min tmin
+
+  repeat 5 [
+    set tmin file-read
+  ]
+
+
+end
+
+to import-rain
+
+   if Dataset = "Whitby" [
+   file-open "Input/Whitby/rain.csv"
+  ]
+  if Dataset = "Durham" [
+   file-open "Input/Durham/rain.csv"
+  ]
+  if Dataset = "Bradford" [
+   file-open "Input/Bradford/rain.csv"
+  ]
+    if Dataset = "Eskdalemuir" [
+   file-open "Input/Eskdalemuir/rain.csv"
+  ]
+   if Dataset = "Oxford" [
+   file-open "Input/Oxford/rain.csv"
+  ]
+   set rain file-read
+
+end
+
+to import-frost
+
+   if Dataset = "Whitby" [
+   file-open "Input/Whitby/frost.csv"
+  ]
+  if Dataset = "Durham" [
+   file-open "Input/Durham/frost.csv"
+  ]
+  if Dataset = "Bradford" [
+   file-open "Input/Bradford/frost.csv"
+  ]
+    if Dataset = "Eskdalemuir" [
+   file-open "Input/Eskdalemuir/frost.csv"
+  ]
+  if Dataset = "Oxford" [
+   file-open "Input/Oxford/frost.csv"
+  ]
+   set af-days file-read
+
+end
